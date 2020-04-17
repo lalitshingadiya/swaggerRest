@@ -35,12 +35,12 @@ public class CustomerController {
         return customerService.createCustomer(customerDTO);
     }
 
-    @PatchMapping(BASE_URL+"{id}")
+    @PatchMapping(BASE_URL+"/{id}")
     CustomerDTO updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO){
         return customerService.updateCustomer(id,customerDTO);
     }
 
-    @DeleteMapping(BASE_URL+"{id}")
+    @DeleteMapping(BASE_URL+"/{id}")
     void deleteCustomer(@PathVariable Long id){
         customerService.deleteById(id);
     }

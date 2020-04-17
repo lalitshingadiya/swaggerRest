@@ -41,7 +41,8 @@ class CustomerControllerTest {
     void setUp() {
 
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(customerController)
+                .setControllerAdvice(ExceptionHandlerController.class).build();
     }
 
     @Test
@@ -94,5 +95,38 @@ class CustomerControllerTest {
                 .getContentAsString();
         //then
         assertNotNull(responseStr);
+    }
+
+    @Test
+    void updateCustomer() throws Exception {
+        CustomerDTO customerDTO = CustomerDTO.builder().firstName("test").build();
+        CustomerDTO customerDTO1 = CustomerDTO.builder().id(1L).firstName("test").build();
+        //given
+        Mockito.when(customerService.updateCustomer(Mockito.anyLong(),Mockito.any())).thenReturn(customerDTO1);
+        ObjectMapper mapper = new ObjectMapper();
+        //when
+        String responseStr = mockMvc.perform(
+                MockMvcRequestBuilders.patch("/"+CustomerController.BASE_URL+"/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(customerDTO))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andReturn()
+                .getResponse().getContentAsString();
+        assertNotNull(responseStr);
+    }
+
+    @Test
+    void deleteCustomer() throws Exception {
+
+        //when
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/"+CustomerController.BASE_URL+"/1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        //then
+        Mockito.verify(customerService,Mockito.times(1)).deleteById(Mockito.anyLong());
     }
 }
