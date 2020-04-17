@@ -28,13 +28,13 @@ public class SwaggerConfig {
 
     private ApiInfo getApiInfo() {
         return new ApiInfo(
-                "Ecw Web Service",
-                "Ecw wen service desciption",
+                "Lalit's swagger rest API",
+                "Lalits swagger documented rest API",
                 "version V1",
-                "www.eclinicalworks.com",
+                "http://www.lalitshingadiya.com",
                 getContactInfo(),
                 "open source",
-                "ww.eclinicalworks.com/licence-info",
+                "http://www.lalitshingadiya.com/licence-info",
                 new ArrayList<>()
         );
     }
@@ -42,8 +42,8 @@ public class SwaggerConfig {
     private Contact getContactInfo(){
         return new Contact(
                 "Lalit Shingadiya",
-                "www.eclinicalworks.com/lalits",
-                "lalit.shingadiya@eclinicalworks.com"
+                "http://www.lalitshingadiya.com/lalits",
+                "lalit.shingadiya@gmail.com"
         );
     }
 }

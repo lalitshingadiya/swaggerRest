@@ -4,7 +4,11 @@ import com.ecw.webservice.dto.CustomerDTO;
 import com.ecw.webservice.dto.CustomerDTOList;
 import com.ecw.webservice.service.CustomerService;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 
 @RestController
@@ -45,4 +49,9 @@ public class CustomerController {
         customerService.deleteById(id);
     }
 
+    @PutMapping(BASE_URL+"/{id}")
+    CustomerDTO replaceCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDTO customerDTO){
+
+        return customerService.replaceCustomer(id,customerDTO);
+    }
 }

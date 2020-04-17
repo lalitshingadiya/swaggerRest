@@ -129,4 +129,22 @@ class CustomerControllerTest {
         //then
         Mockito.verify(customerService,Mockito.times(1)).deleteById(Mockito.anyLong());
     }
+
+    @Test
+    void replaceCustomer() throws Exception {
+        CustomerDTO customerDTO = CustomerDTO.builder().firstName("TEst").lastName("Test").build();
+        ObjectMapper mapper = new ObjectMapper();
+        //given
+            Mockito.when(customerService.replaceCustomer(Mockito.anyLong(),Mockito.any())).thenReturn(customerDTO);
+        //when
+        MvcResult mvcResult = mockMvc.perform(
+                MockMvcRequestBuilders.put("/"+CustomerController.BASE_URL+"/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(customerDTO))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("TEst"))
+                .andReturn();
+        assertNotNull(mvcResult.getResponse().getContentAsString());
+    }
 }
