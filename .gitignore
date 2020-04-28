@@ -26,11 +26,8 @@ hs_err_pid*
 build/
 
 # Gralde files
-gradle/
-gradlew.bat
 settings.gradle
 .gradle/
-gradlew
 
 # intellij files
 .idea/
